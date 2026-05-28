@@ -16,6 +16,7 @@ from unittest.mock import MagicMock, patch
 
 DAY_DIR = Path(__file__).parent.parent
 SOLUTION_DIR = DAY_DIR / "solution"
+SAFE_DAY_MODULE = DAY_DIR.name.replace("-", "_")
 
 
 def _load(path: Path, unique_name: str):
@@ -27,12 +28,12 @@ def _load(path: Path, unique_name: str):
 
 
 if (SOLUTION_DIR / "solution.py").exists():
-    _m = _load(SOLUTION_DIR / "solution.py", f"{DAY_DIR.name}.solution")
+    _m = _load(SOLUTION_DIR / "solution.py", f"{SAFE_DAY_MODULE}.solution")
 elif (SOLUTION_DIR / "app.py").exists():
-    _m = _load(SOLUTION_DIR / "app.py", f"{DAY_DIR.name}.solution")
+    _m = _load(SOLUTION_DIR / "app.py", f"{SAFE_DAY_MODULE}.solution")
 else:
     src = "template.py" if (DAY_DIR / "template.py").exists() else "app.py"
-    _m = _load(DAY_DIR / src, f"{DAY_DIR.name}.template")
+    _m = _load(DAY_DIR / src, f"{SAFE_DAY_MODULE}.template")
 
 call_openai = getattr(_m, 'call_openai')
 call_openai_mini = getattr(_m, 'call_openai_mini')
